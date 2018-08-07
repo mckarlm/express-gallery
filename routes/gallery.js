@@ -3,7 +3,8 @@ const router = express.Router();
 const Gallery = require('../db/models/Gallery');
 
 
-// POST, GET
+// GET       DONE
+// POST      DONE
 router.route('/')
   .post((req, res) => {
     let { author, link, description } = req.body;
@@ -31,7 +32,9 @@ router.route('/')
       });
   })
 
-// GET, PUT, DELETE
+// GET       DONE
+// PUT
+// DELETE    DONE
 router.route('/:id')
   .get((req, res) => {
     const id = req.params.id;
