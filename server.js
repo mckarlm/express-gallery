@@ -1,11 +1,11 @@
 const express = require('express');
 const bodyparser = require('body-parser');
 const PORT = process.env.PORT || 4020;
-//const routes = require('./routes');
-const server = express();
+const routes = require('./routes');
 
+const server = express();
 server.use(bodyparser.urlencoded({extended:true}));
-//server.use('/', routes);
+server.use('/', routes);
 
 server.get('/', (req, res)=>{
   res.send('test page, should never be seen');
