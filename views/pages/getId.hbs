@@ -1,1 +1,67 @@
-<h2>test</h2>
+{{> header}}
+
+<div class="detail_main_container">
+
+  <div class="detail_feature_container">
+    <div class="detail_feature_title">
+      F.title
+    </div>
+    <div class="detail_feature_img">
+      F.img
+    </div>
+    <div class="detail_feature_desc">
+      F.desc
+    </div>
+    <div class="detail_buttons">
+      F.delete+edit
+    </div>
+  </div>
+
+  <div class="detail_other_container">
+    <div class="detail_other_sub_container">
+      <div class="detail_other_img">
+        L.img
+      </div>
+      <div class="detail_other_title">
+        L.title
+      </div>
+    </div>
+    <div class="detail_other_sub_container">
+      <div class="detail_other_img">
+        L.img
+      </div>
+      <div class="detail_other_title">
+        L.title
+      </div>
+    </div>
+    <div class="detail_other_sub_container">
+      <div class="detail_other_img">
+        L.img
+      </div>
+      <div class="detail_other_title">
+        L.title
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+<h6>something</h6>
+<div style="background-color: lightcyan">
+  <div style="background-color:mediumpurple">
+    {{id}}
+  </div>
+{{author}}
+{{link}}
+{{description}}
+{{created_at}}
+</div>
+
+
+<button><a href="/gallery/{{id}}/edit">Edit Page</a></button>
+<form action="/gallery/{{id}}?_method=DELETE" method="POST" enctype="application/x-www-form-urlencoded">
+  <input type="hidden" name="_method" value="DELETE">
+  <input type="submit" value="Delete Item" id="delete_button">
+</form>
+ 

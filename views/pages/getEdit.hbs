@@ -1,1 +1,11 @@
-<h1>editor lmao</h1>
+{{> header}}
+<form action="/gallery/{{id}}?_method=PUT" method="POST" enctype="application/x-www-form-urlencoded">
+  <input type="hidden" name="_method" value="PUT">
+  <h4>Author</h4>
+  <input type="text" name="author">
+  <h4>Link</h4>
+  <input type="text" name="link">
+  <h4>Description</h4>
+  <input type="text" name="description">
+  <input type="submit" value="Edit Page" id="edit_button">
+</form>
