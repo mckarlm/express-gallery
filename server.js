@@ -1,10 +1,19 @@
 const express = require('express');
 const bodyparser = require('body-parser');
-const PORT = process.env.PORT || 4020;
+const handlebars = require('express-handlebars');
 const routes = require('./routes');
-
 const server = express();
+const PORT = process.env.PORT || 4020;
+
 server.use(bodyparser.urlencoded({extended:true}));
+server.use(bodyparser.json());
+
+server.engine('.hbs', handlebars({
+  defaultLayout : 'index',
+  extname: '.hbs'
+}));
+server.set('view engine', '.hbs');
+
 server.use('/', routes);
 
 server.get('/', (req, res)=>{
@@ -16,7 +25,7 @@ server.get('*', (req, res)=>{
 })
 
 server.listen(PORT, ()=>{
-  console.log(`connect to ${PORT}`);
+  console.log(`connect to ${PORT} \n`);
 })
 
 /*

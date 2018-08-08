@@ -2,6 +2,10 @@ const express = require('express');
 const router = express.Router();
 const Gallery = require('../db/models/Gallery');
 
+router.route('/new')
+  .get((req, res)=>{
+    return res.render('pages/getNew')
+  })
 
 // GET       DONE
 // POST      DONE
@@ -32,9 +36,6 @@ router.route('/')
       });
   })
 
-// GET       DONE
-// PUT
-// DELETE    DONE
 router.route('/:id')
   .get((req, res) => {
     const id = req.params.id;
@@ -47,7 +48,8 @@ router.route('/:id')
           invalidPhotoErr.statusCode = 404;
           throw invalidPhotoErr;
         }
-        return res.json(image);
+        console.log(image)
+        return res.render('pages/getId')
       })
       .catch(err => {
         return res.json({ message: err.message })
@@ -60,8 +62,6 @@ router.route('/:id')
     link = link.trim();
 
     return new Gallery({id})
-      // .where({ id: id })
-      // .fetch()
       .save({author: author, link: link, description: description})
       .then(image => {
         if(!image){
@@ -86,6 +86,11 @@ router.route('/:id')
       .catch(err => {
         return res.json({ message: err.message })
       })
+  })
+
+router.route('/:id/edit')
+  .get((req, res)=>{
+    return res.render('pages/getEdit')
   })
 
 module.exports = router;
