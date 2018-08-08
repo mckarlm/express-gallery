@@ -53,30 +53,39 @@ router.route('/:id')
         return res.json({ message: err.message })
       })
   })
-  .delete((req, res)=>{
+  .put((req, res) => {
     const id = req.params.id;
-    return new Gallery({id : id})
-      .destroy()
-      .then(image =>{
-        if (!image) {
-          const invalidPhotoErr = new Error('Image not found');
-          invalidPhotoErr.statusCode = 404;
-          throw invalidPhotoErr;
+    let { author, link, description } = req.body;
+    author = author.trim();
+    link = link.trim();
+
+    return new Gallery({id})
+      // .where({ id: id })
+      // .fetch()
+      .save({author: author, link: link, description: description})
+      .then(image => {
+        if(!image){
+          return res.json({message: 'Invalid image'})
         }
-        return res.json(image)
+        return res.json({message: 'Successful edit'})
+      })
+  })
+  .delete((req, res) => {
+    const id = req.params.id;
+    return new Gallery({ id: id })
+      .destroy()
+      .then(image => {
+        if (!image) {
+          return res.json({ message: 'Image not found' })
+          // const invalidPhotoErr = new Error('Image not found');
+          // invalidPhotoErr.statusCode = 404;
+          // throw invalidPhotoErr;
+        }
+        return res.json({ message: 'Image successfully deleted' })
       })
       .catch(err => {
-        return res.json({message: err.message})
+        return res.json({ message: err.message })
       })
   })
-  .put((req, res)=>{
-    const id = req.params.id;
-    
-  })
-
-// router.route('/new')
-// .get(req, res => {
-
-// })
 
 module.exports = router;
