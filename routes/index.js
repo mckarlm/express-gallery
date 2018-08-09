@@ -18,65 +18,22 @@ router.use('/gallery', gallery);
 // ROUTES
 router.route('/')
   .get((req,res) => {
-    return res.render('pages/absoluteRoot');
+    const loginMessage = {
+      message: 'Please log in.',
+      login: true
+    };
+    const username = req.session.passport;
+    console.log(req.session)
+    if (!username){
+      return res.render('pages/absoluteRoot', loginMessage)
+    }
+    return res.render('pages/absoluteRoot', username.user);
   })
 
 router.route('/new')
   .get((req, res) => {
     return res.render('pages/getNew');
   });
-
-passport.serializeUser((user, done) => {
-  console.log('serializing');
-  return done(null, {
-    id: user.id,
-    username: user.username
-  });
-});
-
-passport.deserializeUser((user, done) => {
-  console.log('deserializing');
-  new User({ id: user.id })
-    .fetch()
-    .then(user => {
-      user = user.toJSON();
-      return done(null, {
-        id: user.id,
-        username: user.username
-      });
-    })
-    .catch(err => {
-      console.log(err);
-      return done(err);
-    });
-});
-
-passport.use(new LocalStrategy(function (username, password, done) {
-  return new User({ username: username })
-    .fetch()
-    .then(user => {
-      user = user.toJSON();
-      console.log(user);
-      if (user === null) {
-        return done(null, false, { message: 'Wrong Username and/or Password' });
-      } else {
-        console.log(password, user.password);
-        bcrypt.compare(password, user.password)
-          .then(samePassword => {
-            if (samePassword) {
-              console.log(samePassword);
-              return done(null, user);
-            } else {
-              return done(null, false, { message: 'Wrong Username and/or Password' });
-            };
-          });
-      };
-    })
-    .catch(err => {
-      console.log('error: ', err);
-      return done(err);
-    });
-}));
 
 router.route('/register')
   .get((req, res) => {
@@ -112,41 +69,19 @@ router.route('/register')
 
 router.route('/login/forgotpassword')
   .get((req, res)=>{
-    res.render('pages/getForgotPassword');
+    return res.render('pages/getForgotPassword');
   })
 
-router.route('/login')
+router.route('/login/success')
   .get((req, res)=>{
-    res.render('pages/getLogin');
+    const cookie = req.session.passport.user;
+    const noCookie = {
+      message: 'Hey! Seems you forgot to log in!'
+    }
+    if (!cookie){
+      res.redirect('/');
+    }
+    return res.render('pages/getLoginSuccess')
   })
-  .post(passport.authenticate('local', {
-  successRedirect: '/secret',
-  failureRedirect: '/'
-}));
-
-
-router.route('/logout')
-  .get((req, res) => {
-  req.logout();
-  res.sendStatus(200);
-});
-
-function isAuthenticated(req, res, next) {
-  // console.log(req.isAuthenticated());
-  if (req.isAuthenticated()) {
-    next();
-  } else {
-    res.redirect('/');
-  };
-};
-
-router.route('/secret')
-  .get(isAuthenticated, (req, res) => {
-  console.log('req.user: ', req.user);
-  console.log('req.user.id: ', req.user.id);
-  console.log('req.username: ', req.user.username);
-  console.log('HELP ME')
-  res.send('SCRUB');
-});
 
 module.exports = router;
