@@ -13,6 +13,7 @@ const bcrypt = require('bcrypt');
 const User = require('./db/models/User');
 const routes = require('./routes');
 
+const saltRounds = 12;
 const server = express();
 const PORT = process.env.PORT || 4020;
 
@@ -52,63 +53,14 @@ server.use('/', routes);
 server.use(passport.initialize());
 server.use(passport.session());
 
-passport.serializeUser((user, done) => {
-  console.log('serializing');
-  return done(null, {
-    id: user.id,
-    username: user.username
-  });
-});
 
-passport.deserializeUser((user, done) => {
-  console.log('deserializing');
-  new User({ id: user.id })
-    .fetch()
-    .then(user => {
-      user = user.toJSON();
-      return done(null, {
-        id: user.id,
-        username: user.username
-      });
-    })
-    .catch(err => {
-      console.log(err);
-      return done(err);
-    });
-});
-
-passport.use(new LocalStrategy(function (username, password, done) {
-  return new User({ username: username }).fetch()
-    .then(user => {
-      console.log('FIAJGIOFEJSIOFAJODFJEIPGJSEOIJ')
-      console.log(user);
-      user = user.toJSON();
-      if (user === null) {
-        return done(null, false, { message: 'Wrong Username and/or Password' });
-      } else {
-        console.log(password, user.password);
-        bcrypt.compare(password, user.password)
-          .then(samePassword => {
-            if (samePassword) {
-              console.log(samePassword);
-              return done(null, user);
-            } else {
-              return done(null, false, { message: 'Wrong Username and/or Password' });
-            };
-          });
-      };
-    })
-    .catch(err => {
-      console.log('error: ', err);
-      return done(err);
-    });
-}));
 
 // NETS
 server.get('*', (req, res) => {
-  res.send('catch all');
+  res.send('Oops! You came across a bad URL!');
 });
 
 server.listen(PORT, () => {
   console.log(`connect to ${PORT} \n`);
 });
+

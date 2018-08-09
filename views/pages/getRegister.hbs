@@ -1,0 +1,24 @@
+{{> header}}
+<h2>Register</h2>
+<div>
+  <form action="/register" enctype="application/x-www-form-urlencoded" method="POST">
+    <h4>Username</h4>
+    <input type="text" name="username" maxlength="16" placeholder="Maximum 16 characters" value="{{username}}">
+    <h4>Password</h4>
+    <input type="password" name="password" maxlength="16" placeholder="Maximum 16 characters"> {{!--
+    <h4>Name</h4>
+    <input type="text" name="name" maxlength="" value="{{name}}"> --}}
+    <h4>Email</h4>
+    <input type="text" name="email" maxlength="48" placeholder="Maximum 48 characters" value="{{email}}">
+    <br>
+    <br>
+    <div>
+      <input type="submit" value="Register">
+      <input type="reset" value="Clear">
+    </div>
+  </form>
+  <br>
+  <div>
+    <a href="http://localhost:4020/">Cancel</a>
+  </div>
+</div>
