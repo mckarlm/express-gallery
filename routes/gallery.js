@@ -2,11 +2,6 @@ const express = require('express');
 const router = express.Router();
 const Gallery = require('../db/models/Gallery');
 
-router.route('/new')
-  .get((req, res)=>{
-    return res.render('pages/getNew');
-  });
-
 router.route('/')
   .post((req, res) => {
     let { author, link, description } = req.body;
