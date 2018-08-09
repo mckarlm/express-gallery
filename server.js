@@ -78,11 +78,11 @@ passport.deserializeUser((user, done) => {
 });
 
 passport.use(new LocalStrategy(function (username, password, done) {
-  return new User({ username: username })
-    .fetch()
+  return new User({ username: username }).fetch()
     .then(user => {
-      user = user.toJSON();
+      console.log('FIAJGIOFEJSIOFAJODFJEIPGJSEOIJ')
       console.log(user);
+      user = user.toJSON();
       if (user === null) {
         return done(null, false, { message: 'Wrong Username and/or Password' });
       } else {

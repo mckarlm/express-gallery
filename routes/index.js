@@ -1,6 +1,7 @@
 // LIBRARIES/PACKAGES
 const express = require('express');
 const bcrypt = require('bcrypt');
+const passport = require('passport');
 
 // OWN CODE
 const gallery = require('./gallery');
@@ -34,7 +35,7 @@ router.route('/register')
         username: req.body.username,
         password: hashedPassword,
         email: req.body.email,
-        name: req.body.name
+        full_name: req.body.full_name
       })
         .save()
         .then(user => {
@@ -49,6 +50,33 @@ router.route('/register')
   });
 });
 
+router.route('/login')
+  .post(passport.authenticate('local', {
+    successRedirect: '/secret',
+    failureRedirect: '/'
+  }));
 
+router.route('/logout')
+  .get((req, res)=>{
+    res.logout();
+    res.sendStatus(200);
+  });
+
+function isAuthenticated(req, res, next) {
+  console.log(req.isAuthenticated())
+  if (req.isAuthenticated()){
+    next();
+  } else {
+    res.redirect('/');
+  };
+};
+
+router.route('/secret')
+  .get(isAuthenticated, (req, res)=> {
+    console.log('req.user: ', req.user);
+    console.log('req.user.id: ', req.user.id);
+    console.log('req.username: ', req.user.username);
+    res.redirect('/');
+  });
 
 module.exports = router;
