@@ -1,21 +1,20 @@
-<div class="header" style="background-color:lightyellow">
+<div class="headerrrr" style="background-color:lightyellow">
   <div>
     <h1>_ARCHITEKT</h1>
   </div>
   <div>
-    Text goes heres
+    Filler text
   </div>
 </div>
+
 <div>
-{{message}} {{#if login}}
 <div>
-  <a href="http://localhost:4020/login">Log In</a>
+  <a href="http://localhost:4020/login">Login</a>
 </div>
 <div>
   <a href="http://localhost:4020/register">Register</a>
 </div>
-{{/if}}
-{{#if !login}}
+Logged in as : {{user.username}}
+<br>
 <a href="http://localhost:4020/logout">Log Out</a>
-{{/if}}
 </div>

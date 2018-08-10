@@ -1,6 +1,9 @@
 const express = require('express');
-const router = express.Router();
 const Gallery = require('../db/models/Gallery');
+const auth = require('../extra/auth');
+const router = express.Router();
+
+// router.use(auth.isAuthenticated)
 
 router.route('/')
   .post((req, res) => {
@@ -18,6 +21,9 @@ router.route('/')
       });
   })
   .get((req, res) => {
+    console.log(req.isUnauthenticated);
+    console.log('hhhhhh');
+    console.log({user: req.user});
     return Gallery
       .query('where', 'id', '>', '0')
       .fetchAll()

@@ -7,6 +7,7 @@ const LocalStrategy = require('passport-local');
 // OWN CODE
 const gallery = require('./gallery');
 const User = require('../db/models/User');
+const auth = require('../extra/auth');
 
 // VARIABLES
 const saltRounds = 12;
@@ -16,19 +17,13 @@ const router = express.Router();
 router.use('/gallery', gallery);
 
 // ROUTES
-router.route('/')
-  .get((req,res) => {
-    const loginMessage = {
-      message: 'Please log in.',
-      login: true
-    };
-    const username = req.session.passport;
-    console.log(req.session)
-    if (!username){
-      return res.render('pages/absoluteRoot', loginMessage)
-    }
-    return res.render('pages/absoluteRoot', username.user);
-  })
+// router.route('/')
+//   .get((req, res) => {
+//   console.log('??????')
+//   console.log({user: req.user});
+//   console.log('???')
+//   res.render('pages/absoluteRoot', {user: req.user});
+// })
 
 router.route('/new')
   .get((req, res) => {
@@ -67,21 +62,5 @@ router.route('/register')
   });
 });
 
-router.route('/login/forgotpassword')
-  .get((req, res)=>{
-    return res.render('pages/getForgotPassword');
-  })
-
-router.route('/login/success')
-  .get((req, res)=>{
-    const cookie = req.session.passport.user;
-    const noCookie = {
-      message: 'Hey! Seems you forgot to log in!'
-    }
-    if (!cookie){
-      res.redirect('/');
-    }
-    return res.render('pages/getLoginSuccess')
-  })
 
 module.exports = router;

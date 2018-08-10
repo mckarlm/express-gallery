@@ -1,0 +1,48 @@
+body {
+  border: black 1px solid;
+  padding: 50px;
+  padding-top: 25px;
+  padding-bottom: 25px;
+}
+.header {
+  font-family: "Do Hyeon";
+  height: 100%;
+  width: 100%;
+  border-top: dashed gray 2px;
+  display: flex;
+  justify-content: space-around;
+  padding: 20px;
+}
+
+.headerText {
+  padding: 10px;
+  padding-left: 15px;
+  border-left: dashed gray 2px;
+  word-wrap: break-word;
+  width: 150px;
+  font-size: 10px;
+  background: coral
+}
+
+.title {
+  font-size: 50px;
+  font-style: italic;
+}
+
+.registerLogin {
+  display: flex;
+  justify-content: space-around;
+  align-content: space-around;
+  color: black;
+  border: dotted black 1px;
+  padding: 15px; 
+}
+
+.regLogContainer {
+  border: solid black 1px;
+  padding: 5px;
+}
+
+/* .registerLogin {
+
+} */
