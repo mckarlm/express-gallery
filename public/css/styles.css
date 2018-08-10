@@ -10,13 +10,15 @@ body {
   width: 100%;
   border-top: dashed gray 2px;
   display: flex;
-  justify-content: space-around;
-  padding: 20px;
+  justify-content: space-between;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  background-color: bisque;
 }
 
 .headerText {
   padding: 10px;
-  padding-left: 15px;
+  
   border-left: dashed gray 2px;
   word-wrap: break-word;
   width: 150px;
